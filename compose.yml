@@ -1,0 +1,37 @@
+services:
+  setec-web-mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: setec_web_db  # Change from MYSQL_DB to MYSQL_DATABASE
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+      MYSQL_ROOT_PASSWORD: mysql
+    volumes:
+      - setec-web-mysql:/var/lib/mysql
+    ports:
+      - "3308:3306"
+    networks:
+      - setec-web-network
+  
+  setec-web-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8086:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://setec-web-mysql:3306/setec_web_db
+      SPRING_DATASOURCE_USERNAME: mysql
+      SPRING_DATASOURCE_PASSWORD: mysql
+    depends_on:
+      - setec-web-mysql
+    networks:
+      - setec-web-network
+
+volumes:
+  setec-web-mysql:
+networks:
+  setec-web-network:
+    driver: bridge
