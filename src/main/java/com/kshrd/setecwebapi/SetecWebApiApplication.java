@@ -10,7 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Web API", version = "1.0"), servers = @Server(url = "/"))
+@OpenAPIDefinition(servers = @Server(url = "/"))
 public class SetecWebApiApplication {
 
     public static void main(String[] args) {
